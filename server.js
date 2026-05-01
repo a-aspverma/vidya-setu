@@ -23,6 +23,13 @@ const errorHandler = require('./middleware/errorHandler');
 const app = express();
 
 // Middleware
+app.use(express.static("dist", {
+  setHeaders: (res, path) => {
+    if (path.endsWith(".js")) {
+      res.setHeader("Content-Type", "application/javascript");
+    }
+  }
+}));
 app.use(helmet()); // Security headers
 app.use(compression()); // Compress responses
 app.use(morgan('combined')); // Logging
